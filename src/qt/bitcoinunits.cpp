@@ -1,3 +1,7 @@
+// Copyright (c) 2011-2013 The Bitcoin developers
+// Distributed under the MIT/X11 software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "bitcoinunits.h"
 
 #include <QStringList>
@@ -36,7 +40,7 @@ QString BitcoinUnits::name(int unit)
     {
     case BTC: return QString("MEM");
     case mBTC: return QString("mMEM");
-    case uBTC: return QString("uMEM");
+    case uBTC: return QString::fromUtf8("μMEM");
     default: return QString("???");
     }
 }
@@ -45,9 +49,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("MemeCoin");
-    case mBTC: return QString("Milli-MemeCoin (1 / 1,000)");
-    case uBTC: return QString("Micro-MemeCoin (1 / 1,000,000)");
+    case BTC: return QString("Memecoins");
+    case mBTC: return QString("Milli-Memecoins (1 / 1,000)");
+    case uBTC: return QString("Micro-Memecoins (1 / 1,000,000)");
     default: return QString("???");
     }
 }
@@ -99,7 +103,7 @@ QString BitcoinUnits::format(int unit, qint64 n, bool fPlus)
     QString quotient_str = QString::number(quotient);
     QString remainder_str = QString::number(remainder).rightJustified(num_decimals, '0');
 
-    // Right-trim excess 0's after the decimal point
+    // Right-trim excess zeros after the decimal point
     int nTrim = 0;
     for (int i = remainder_str.size()-1; i>=2 && (remainder_str.at(i) == '0'); --i)
         ++nTrim;
